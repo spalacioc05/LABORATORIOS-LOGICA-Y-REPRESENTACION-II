@@ -1,11 +1,11 @@
-''' Ejercicio 1
+''' 
+Ejercicio 1
 Utiliza una lista simplemente enlazada para crear una estructura de 25 nodos,
 cada uno conteniendo un número aleatorio entre 1 y 30. Una vez generada la lista enlazada,
-construye una pila en la que los números pares se coloquen en la parte inferior y los impares en la parte superior. '''
+construye una pila en la que los números pares se coloquen en la parte inferior y los impares en la parte superior. 
+'''
 
 import random
-
-
 
 class Node:
     def __init__(self, value):
@@ -46,12 +46,12 @@ class Stack:
 
     def stacking(self, value):
         if self.full_stack():
-            print("The stack is full, we can only manage to stack 25 items at a time.")
-            raise ValueError("Document exceeds 20 characters")
+            print("La pila está llena, sólo podemos apilar 25 objetos a la vez.")
+            raise ValueError("Error")
         else:
             self.top = self.top + 1
             self.V.append(value)
-            return True
+ 
 
     def print_stack(self):
         for V in reversed(self.V):
@@ -60,10 +60,10 @@ class Stack:
 
 
 lsl = LSL()
-for _ in range(900):
+for i in range(25): 
     lsl.insert_value(random.randint(1, 30))
 
-print("SLL")
+print("LSL")
 lsl.print_list()
 print("--------------------------------------------------------------------------------------")
 
@@ -83,11 +83,11 @@ try:
             stack.stacking(actual_node.value)
         actual_node = actual_node.next
 
-    print("Stack (even numbers at the bottom, odd numbers at the top):")
+    print("Pila (números pares abajo, impares arriba):")
     stack.print_stack()
 
 except:
-    print("Stack (even numbers at the bottom, odd numbers at the top):")
+    print("Pila (números pares abajo, impares arriba):")
     stack.print_stack()
 
 
