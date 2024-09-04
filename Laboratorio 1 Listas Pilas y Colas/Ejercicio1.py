@@ -6,6 +6,7 @@ construye una pila en la que los números pares se coloquen en la parte inferior
 import random
 
 
+
 class Node:
     def __init__(self, value):
         self.value = value
