@@ -7,77 +7,68 @@ los elementos de la lista resultante ordenada.
 
 import random
 
+class Nodo:
+    def __init__(self, parametro):
+        self.valor = parametro
+        self.siguiete = None
 
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
-class CircularList:
+class LSLC:
     def __init__(self):
-        self.head = None
+        self.cabecera = None
 
-    def insert(self, valor):
-        nuevo_nodo = Node(valor)
-        if self.head is None:
-            nuevo_nodo.next = nuevo_nodo
-            self.head = nuevo_nodo
+    def insertar_nuevo_nodo(self, valor):
+        nuevo_nodo = Nodo(valor)
+        if not self.cabecera:
+            self.cabecera = nuevo_nodo
+            self.cabecera.siguiete = self.cabecera
         else:
-            nodo_actual = self.head
-            while nodo_actual.next is not self.head:
-                nodo_actual = nodo_actual.next
-            nuevo_nodo.next = self.head
-            nodo_actual.next = nuevo_nodo
+            nodo_actual = self.cabecera
+            while nodo_actual.siguiete is not self.cabecera:
+                nodo_actual = nodo_actual.siguiete
+            nodo_actual.siguiete = nuevo_nodo
+            nuevo_nodo.siguiete = self.cabecera
 
-    def sort(self):
-        if not self.head:
-            return
-        end = None
-        while end != self.head.next:   #self.head.next != None
-            p = self.head
-            while p.next != end:
-                q = p.next
-                if p.data > q.data:
-                    p.data, q.data = q.data, p.data
-                p = p.next
-            end = p
-
-        def insert(self, data):
-            new_node = Node(data)
-            if not self.head:
-                self.head = new_node
-                new_node.next = self.head
-            else:
-                temp = self.head
-                while temp.next != self.head:
-                    temp = temp.next
-                temp.next = new_node
-                new_node.next = self.head
-            print(f"Inserted: {data}")
-        
-        def display(self):
-            if not self.head:
-                print("List is empty")
-                return
-            temp = self.head
-            index = 0
+    def to_list(self):
+        result = []
+        if self.cabecera:
+            nodo_actual = self.cabecera
             while True:
-                print(f"Position {index}: {temp.data}")
-                temp = temp.next
-                index += 1
-                if temp == self.head:
+                result.append(nodo_actual.valor)
+                nodo_actual = nodo_actual.siguiete
+                if nodo_actual == self.cabecera:
                     break
-            print()
+        return result
 
-# Create a circular list
-clist = CircularList()
+    def organizar(self):
+        if self.cabecera:
+            lst = self.to_list()
+            lst.sort()
+            self.cabecera = None
+            for item in lst:
+                self.insertar_nuevo_nodo(item)
 
-# Insert 50 random integers into the circular list
-for _ in range(50):
-    clist.insert(random.randint(1, 100))
+    def imprimir_lista(self):
+        if self.cabecera is None:
+            print("La lista esta vacia")
+        else:
+            nodo_actual = self.cabecera
+            while True:
+                print(nodo_actual.valor, end=" ")
+                if nodo_actual.siguiete is self.cabecera:
+                    break
+                else:
+                    nodo_actual = nodo_actual.siguiete
+                    
+# Generar 50 números enteros aleatorios en el rango de 1 a 100
+circular_list = LSLC()
+for i in range(50):
+    circular_list.insertar_nuevo_nodo(random.randint(1, 100))
 
-# Sort the circular list
-clist.sort()
+print("Lista original:")
+circular_list.imprimir_lista()
 
-# Display the sorted list with positions
-clist.display()
+# Ordenar la lista
+circular_list.organizar()
+
+print("\nLista ordenada:")
+circular_list.imprimir_lista()
