@@ -94,18 +94,12 @@ class Pila:
         self.tope = self.tope - 1
         return valor_eliminar
 
-    def imprimir_pilaaaa(self):
+    def imprimir_pila(self):
         while not self.pila_vacia():
             valor = self.desapilar()
             if valor is not None:
                 print(f"| {valor} |")
                 print(" --- ")
-    
-    def imprimir_pila(self):
-        actual = self.cima
-        while actual:
-            print(actual.valor)
-            actual = actual.siguiente
 
 
 lista = LSL()
