@@ -25,38 +25,6 @@ class LSL:
             while nodo_actual.siguiente is not None:
                 nodo_actual = nodo_actual.siguiente
             nodo_actual.siguiente = nuevo_nodo
-
-    def eliminar_ultimo(self):
-        # Definición de la función eliminar_ultimo que pertenece a la clase LSL.
-        
-        if self.cabecera is None:
-            # Verifica si la lista está vacía (si la cabecera es None).
-            return None
-            #  Si la lista está vacía, retorna None.
-        
-        if self.cabecera.siguiente is None:
-            # Verifica si la lista tiene solo un nodo (si el siguiente nodo de la cabecera es None).
-            valor_eliminar = self.cabecera.valor
-            # Guarda el valor del único nodo en la variable valor_eliminar.
-            self.cabecera = None
-            # Elimina el único nodo estableciendo la cabecera a None.
-            return valor_eliminar
-            # Retorna el valor del nodo eliminado.
-        
-        nodo_actual = self.cabecera
-        # Inicializa nodo_actual con la cabecera de la lista.
-        
-        while nodo_actual.siguiente.siguiente is not None:
-            # Itera a través de la lista hasta encontrar el penúltimo nodo (el nodo cuyo siguiente nodo es el último).
-            nodo_actual = nodo_actual.siguiente
-            # Avanza al siguiente nodo en la lista.
-        
-        valor_eliminar = nodo_actual.siguiente.valor
-        # Guarda el valor del último nodo en la variable valor_eliminar.
-        nodo_actual.siguiente = None
-        # Elimina el último nodo estableciendo el siguiente del penúltimo nodo a None.
-        return valor_eliminar
-        # Retorna el valor del nodo eliminado.
     
     def imprimir_lista(self):
         nodo_actual = self.cabecera
@@ -85,25 +53,27 @@ class Pila:
         else:
             self.tope = self.tope + 1
             self.V.insertar_valor(valor)
-    
-    def desapilar(self):
-        if self.pila_vacia():
-            print("La pila está vacía")
-            return None
-        valor_eliminar = self.V.eliminar_ultimo()
-        self.tope = self.tope - 1
-        return valor_eliminar
 
     def imprimir_pila(self):
-        while not self.pila_vacia():
-            valor = self.desapilar()
-            if valor is not None:
-                print(f"| {valor} |")
-                print(" --- ")
+        # Reverse the linked list
+        prev = None
+        current = self.V.cabecera
+        while current is not None:
+            nuevo_nodo = current.siguiente
+            current.siguiente = prev
+            prev = current
+            current = nuevo_nodo
+        
+        # Print the reversed linked list
+        nodo_actual = prev
+        while nodo_actual is not None:
+            print(f"| {nodo_actual.valor} |")
+            print(" --- ")
+            nodo_actual = nodo_actual.siguiente
 
 
 lista = LSL()
-for i in range(25): 
+for i in range(8): 
     lista.insertar_valor(random.randint(1, 30))
 
 print("LSL")
