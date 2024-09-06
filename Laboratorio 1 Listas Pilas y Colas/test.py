@@ -1,4 +1,76 @@
-""" ejercicio 2 - copilod"""
+class Nodo:
+    """Representa un nodo en la lista doblemente enlazada."""
+    def __init__(self, documento):
+        self.documento = documento
+        self.anterior = None
+        self.siguiente = None
+
+class LDL:
+    """Representa una lista doblemente enlazada."""
+    def __init__(self):
+        self.cabeza = None
+        self.cola = None
+
+    def agregar(self, nodo):
+        """Agrega un nodo al final de la lista."""
+        if not self.cabeza:
+            self.cabeza = nodo
+            self.cola = nodo
+        else:
+            self.cola.siguiente = nodo
+            nodo.anterior = self.cola
+            self.cola = nodo
+
+    def eliminar(self):
+        """Elimina el nodo al principio de la lista."""
+        if self.cabeza:
+            nodo = self.cabeza
+            self.cabeza = self.cabeza.siguiente
+            if self.cabeza:
+                self.cabeza.anterior = None
+            else:
+                self.cola = None
+            return nodo
+
+class Cola:
+    """Representa una cola de impresión."""
+    def __init__(self):
+        self.lista = LDL()
+
+    def encolar(self, documento):
+        """Agrega un documento a la cola."""
+        if len(documento) > 20:
+            print(f"Error: El documento: {documento} excede los 20 caracteres.")
+        else:
+            nodo = Nodo(documento)
+            self.lista.agregar(nodo)
+
+    def desencolar(self):
+        """Elimina y devuelve el documento al principio de la cola."""
+        nodo = self.lista.eliminar()
+        if nodo:
+            return nodo.documento
+        else:
+            return None
+
+    def imprimir(self):
+        """Imprime los documentos en la cola."""
+        nodo = self.lista.cabeza
+        while nodo:
+            print(nodo.documento)
+            nodo = nodo.siguiente
+
+# Ejemplo de uso
+cola = Cola()
+cola.encolar("Documento 1")
+cola.encolar("Documento 2")
+cola.encolar("Documento dfghjkkkkkkkkkkkkkkkkk3")
+cola.imprimir()
+
+
+
+
+""" ejercicio 2 - copilod
 
 class Node:
     def __init__(self, value):
@@ -98,8 +170,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-""" ejercicio 2 - chat"""
+ejercicio 2 - chat
 
 class Nodo:
     def __init__(self, data):
@@ -113,7 +184,7 @@ class LDL:
         self.tail = None  # Nodo final de la lista
 
     def add_last(self, data):
-        """Agrega un nuevo nodo al final de la lista"""
+        Agrega un nuevo nodo al final de la lista
         new_node = Nodo(data)
         if not self.head:  # Si la lista está vacía
             self.head = self.tail = new_node
@@ -123,7 +194,7 @@ class LDL:
             self.tail = new_node  # Actualiza el nodo final
 
     def remove_first(self):
-        """Elimina y retorna el primer nodo de la lista"""
+        Elimina y retorna el primer nodo de la lista
         if not self.head:
             return None
         removed_node = self.head
@@ -135,15 +206,15 @@ class LDL:
         return removed_node.data
 
     def is_empty(self):
-        """Retorna True si la lista está vacía"""
+        Retorna True si la lista está vacía
         return self.head is None
 
 class Cola:
     def __init__(self):
         self.ldl = LDL()  # Instancia de la lista doblemente enlazada
 
-    def encolar(self, documento):
-        """Agrega un documento a la cola"""
+    def encolar(self, documento)
+        Agrega un documento a la cola
         if len(documento) > 20:
             print("Error: El documento excede los 20 caracteres.")
         else:
@@ -151,7 +222,7 @@ class Cola:
             print(f"Documento '{documento}' encolado.")
 
     def desencolar(self):
-        """Procesa y elimina el documento al frente de la cola"""
+        Procesa y elimina el documento al frente de la cola
         if self.ldl.is_empty():
             print("La cola de impresión está vacía.")
         else:
@@ -159,7 +230,7 @@ class Cola:
             print(f"Procesando documento: '{documento}'")
 
     def imprimir_cola(self):
-        """Imprime todos los documentos en la cola"""
+        Imprime todos los documentos en la cola
         nodo_actual = self.ldl.head
         if not nodo_actual:
             print("La cola de impresión está vacía.")
@@ -179,3 +250,5 @@ cola_impresion.imprimir_cola()
 cola_impresion.desencolar()
 cola_impresion.desencolar()
 cola_impresion.desencolar()  # No habrá más documentos que procesar
+
+"""
