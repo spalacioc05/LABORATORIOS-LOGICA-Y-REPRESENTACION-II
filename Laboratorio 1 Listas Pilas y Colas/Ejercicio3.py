@@ -1,7 +1,10 @@
-''' Ejercicio 3
+"""
+Ejercicio 3
 Utiliza una lista circular para generar 50 números enteros aleatorios en el rango de 1 a 100.
 Implementa un método que ordene los nodos de la lista y otro método que muestre
-los elementos de la lista resultante ordenada.'''
+los elementos de la lista resultante ordenada.
+"""
+
 import random
 
 

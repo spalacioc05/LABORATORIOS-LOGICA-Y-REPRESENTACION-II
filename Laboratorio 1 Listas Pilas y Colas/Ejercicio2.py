@@ -8,9 +8,9 @@ Los documentos deben ser procesados en el orden en que fueron encolados, respeta
 
 class Nodo:
     def __init__(self, documento):
-        self.documento = documento
         self.anterior = None
         self.siguiente = None
+        self.documento = documento
 
 class LDL:
     def __init__(self):
@@ -24,14 +24,13 @@ class LDL:
             self.cabecera = nuevo_nodo
             self.cola = nuevo_nodo
         else:
-            self.cola.siguiente = nuevo_nodo
             nuevo_nodo.anterior = self.cola
+            self.cola.siguiente = nuevo_nodo
             self.cola = nuevo_nodo
 
     def eliminar_cabecera(self):
         if self.cabecera is None:
             print("La lista esta vacia")
-            
         else:
             nodo = self.cabecera
             self.cabecera = self.cabecera.siguiente
@@ -41,37 +40,50 @@ class LDL:
                 self.cola = None
             return nodo
 
-class Cola:
-    def __init__(self):
-        self.lista = LDL()
+    def longitud(self):
+        count = 0
+        nodo_actual = self.cabecera
+        while nodo_actual is not None:
+            count += 1
+            nodo_actual = nodo_actual.siguiente
+        return count
+
+class ColaNoCircular:
+    def __init__(self, m):
+        self.capacidad = m
+        self.V = LDL()
+        
+    def cola_vacia(self):
+        return self.V.longitud() == 0
+
+    def cola_llena(self):
+        return self.V.longitud() == self.capacidad
 
     def encolar(self, documento):
         documento = str(documento)
-        if len(documento) > 20:
+        if self.cola_llena():
+            print(" Cola llena ")
+        elif len(documento) > 20:
             print(f"Error: El documento: {documento} excede los 20 caracteres.")
         else:
-            self.lista.agregar_al_final(documento)
+            self.V.agregar_al_final(documento)
 
     def desencolar(self):
-        nodo = self.lista.eliminar_cabecera()
-        if nodo:
-            return nodo.documento
-        else:
+        if self.cola_vacia():
+            print(" Cola vacía ")
             return None
-
-    def imprimir(self):
-        nodo_actual = self.lista.cabecera
-        
-        if nodo_actual is None:
-            print("La cola esta vacia")
         else:
-            while nodo_actual is not None:
-                print(f"Imprimiendo documento... {nodo.documento}")
-                nodo = nodo.siguiente
+            nodo_actual = self.V.eliminar_cabecera()
+            return nodo_actual.documento
 
+    def imprimir_cola(self):
+        while not self.cola_vacia():
+            documento = self.desencolar()
+            if documento is not None:
+                print(f"Imprimiendo documento... {documento}")
 
 # Ejemplo de uso
-cola = Cola()
+cola = ColaNoCircular(5)
 
 cola.encolar("Documento 3")
 cola.encolar("Documentoooooooooooooooooooooooooooooooooooooooo")
@@ -79,5 +91,4 @@ cola.encolar(567890)
 cola.encolar("Documento 4")
 cola.encolar("Documento 5")
 
-
-cola.imprimir()
+cola.imprimir_cola()

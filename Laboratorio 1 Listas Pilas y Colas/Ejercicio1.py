@@ -12,7 +12,6 @@ class Nodo:
         self.valor = valor
         self.siguiente = None
 
-
 class LSL:
     def __init__(self):
         self.cabecera = None
