@@ -57,7 +57,7 @@ class LSL:
         # Elimina el último nodo estableciendo el siguiente del penúltimo nodo a None.
         return valor_eliminar
         # Retorna el valor del nodo eliminado.
-
+    
     def imprimir_lista(self):
         nodo_actual = self.cabecera
         while nodo_actual is not None:
@@ -94,19 +94,25 @@ class Pila:
         self.tope = self.tope - 1
         return valor_eliminar
 
-    def imprimir_pila(self):
+    def imprimir_pilaaaa(self):
         while not self.pila_vacia():
             valor = self.desapilar()
             if valor is not None:
                 print(f"| {valor} |")
                 print(" --- ")
+    
+    def imprimir_pila(self):
+        actual = self.cima
+        while actual:
+            print(actual.valor)
+            actual = actual.siguiente
 
 
 lista = LSL()
 for i in range(25): 
     lista.insertar_valor(random.randint(1, 30))
 
-print("Lista Simplemente Enlazada")
+print("LSL")
 lista.imprimir_lista()
 print("------------------------------------------------------------------------------------------------------------------------------------------------")
 

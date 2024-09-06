@@ -28,24 +28,24 @@ class LSLC:
             nodo_actual.siguiete = nuevo_nodo
             nuevo_nodo.siguiete = self.cabecera
 
-    def to_list(self):
-        result = []
+    def lista(self):
+        L = []
         if self.cabecera:
             nodo_actual = self.cabecera
             while True:
-                result.append(nodo_actual.valor)
+                L.append(nodo_actual.valor)
                 nodo_actual = nodo_actual.siguiete
                 if nodo_actual == self.cabecera:
                     break
-        return result
+        return L
 
     def organizar(self):
         if self.cabecera:
-            lst = self.to_list()
-            lst.sort()
+            lista = self.lista()
+            lista.sort()
             self.cabecera = None
-            for item in lst:
-                self.insertar_nuevo_nodo(item)
+            for i in lista:
+                self.insertar_nuevo_nodo(i)
 
     def imprimir_lista(self):
         if self.cabecera is None:
@@ -53,22 +53,22 @@ class LSLC:
         else:
             nodo_actual = self.cabecera
             while True:
-                print(nodo_actual.valor, end=" ")
+                print(nodo_actual.valor, end=" -> ")
                 if nodo_actual.siguiete is self.cabecera:
                     break
                 else:
                     nodo_actual = nodo_actual.siguiete
                     
-# Generar 50 números enteros aleatorios en el rango de 1 a 100
-circular_list = LSLC()
+
+lslc = LSLC()
 for i in range(50):
-    circular_list.insertar_nuevo_nodo(random.randint(1, 100))
+    lslc.insertar_nuevo_nodo(random.randint(1, 100))
 
 print("Lista original:")
-circular_list.imprimir_lista()
+lslc.imprimir_lista()
 
 # Ordenar la lista
-circular_list.organizar()
+lslc.organizar()
 
 print("\nLista ordenada:")
-circular_list.imprimir_lista()
+lslc.imprimir_lista()
