@@ -67,7 +67,6 @@ for i in range(50):
 print("Lista original:")
 lslc.imprimir_lista()
 
-# Ordenar la lista
 lslc.organizar()
 
 print("\nLista ordenada:")

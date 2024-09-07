@@ -1,9 +1,9 @@
-''' 
+"""
 Ejercicio 1
 Utiliza una lista simplemente enlazada para crear una estructura de 25 nodos,
 cada uno conteniendo un número aleatorio entre 1 y 30. Una vez generada la lista enlazada,
 construye una pila en la que los números pares se coloquen en la parte inferior y los impares en la parte superior. 
-'''
+"""
 
 import random
 
@@ -47,7 +47,7 @@ class Pila:
 
     def apilar(self, valor):
         if self.pila_llena():
-            print("La pila está llena, sólo podemos apilar 25 objetos a la vez.")
+            print("La pila esta llena, solo podemos apilar 25 objetos a la vez.")
             raise ValueError("Error")
         else:
             self.cima = self.cima + 1
@@ -83,9 +83,9 @@ try:
             pila.apilar(nodo_actual.valor)
         nodo_actual = nodo_actual.siguiente
 
-    print("Pila (números pares abajo, impares arriba):")
+    print("Pila (numeros pares abajo, impares arriba):")
     pila.imprimir_pila()
 
 except:
-    print("Pila (números pares abajo, impares arriba):")
+    print("Pila (numeros pares abajo, impares arriba):")
     pila.imprimir_pila()
