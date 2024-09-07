@@ -1,104 +1,91 @@
-"""
+''' 
 Ejercicio 1
 Utiliza una lista simplemente enlazada para crear una estructura de 25 nodos,
 cada uno conteniendo un número aleatorio entre 1 y 30. Una vez generada la lista enlazada,
 construye una pila en la que los números pares se coloquen en la parte inferior y los impares en la parte superior. 
-"""
+'''
 
 import random
 
-class Nodo:
-    def __init__(self, valor):
-        self.valor = valor
-        self.siguiente = None
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
 
 class LSL:
     def __init__(self):
-        self.cabecera = None
+        self.head = None
 
-    def insertar_valor(self, valor):
-        nuevo_nodo = Nodo(valor)
-        if self.cabecera is None:
-            self.cabecera = nuevo_nodo
+    def insert_value(self, value):
+        new_node = Node(value)
+        if self.head is None:
+            self.head = new_node
         else:
-            nodo_actual = self.cabecera
-            while nodo_actual.siguiente is not None:
-                nodo_actual = nodo_actual.siguiente
-            nodo_actual.siguiente = nuevo_nodo
-    
-    def imprimir_lista(self):
-        nodo_actual = self.cabecera
-        while nodo_actual is not None:
-            print(nodo_actual.valor, end=" -> ")
-            nodo_actual = nodo_actual.siguiente
+            actual_node = self.head
+            while actual_node.next is not None:
+                actual_node = actual_node.next
+            actual_node.next = new_node
+
+    def print_list(self):
+        actual_node = self.head
+        while actual_node is not None:
+            print(actual_node.value, end=" -> ")
+            actual_node = actual_node.next
         print("None")
 
 
-class Pila:
-    def __init__(self, tam):
-        self.V = LSL()
-        self.tope = -1
-        self.tam = tam
-        
-    def pila_vacia(self):
-        return self.tope < 0
+class Stack:
+    def __init__(self, size):
+        self.V = []
+        self.top = -1
+        self.size = size
 
-    def pila_llena(self):
-        return self.tope == self.tam - 1
+    def full_stack(self):
+        return self.top == self.size - 1
 
-    def apilar(self, valor):
-        if self.pila_llena():
-            print("La pila esta llena, solo podemos apilar 25 objetos a la vez.")
+    def stacking(self, value):
+        if self.full_stack():
+            print("La pila está llena, sólo podemos apilar 25 objetos a la vez.")
             raise ValueError("Error")
         else:
-            self.tope = self.tope + 1
-            self.V.insertar_valor(valor)
+            self.top = self.top + 1
+            self.V.append(value)
+ 
 
-    def imprimir_pila(self):
-        # Reverse the linked list
-        prev = None
-        current = self.V.cabecera
-        while current is not None:
-            nuevo_nodo = current.siguiente
-            current.siguiente = prev
-            prev = current
-            current = nuevo_nodo
-        
-        # Print the reversed linked list
-        nodo_actual = prev
-        while nodo_actual is not None:
-            print(f"| {nodo_actual.valor} |")
-            print(" --- ")
-            nodo_actual = nodo_actual.siguiente
+    def print_stack(self):
+        for V in reversed(self.V):
+            print(V, end=" -> ")
+        print("None")
 
 
-lista = LSL()
-for i in range(8): 
-    lista.insertar_valor(random.randint(1, 30))
+lsl = LSL()
+for i in range(30):
+    lsl.insert_value(random.randint(1, 30))
 
 print("LSL")
-lista.imprimir_lista()
-print("------------------------------------------------------------------------------------------------------------------------------------------------")
+lsl.print_list()
+print("--------------------------------------------------------------------------------------")
 
-pila = Pila(25)
-nodo_actual = lista.cabecera
+stack = Stack(25)
+actual_node = lsl.head
 
 try:
-    while nodo_actual is not None:
-        if nodo_actual.valor % 2 == 0:
-            pila.apilar(nodo_actual.valor)
-        nodo_actual = nodo_actual.siguiente
+    while actual_node is not None:
+        if actual_node.value % 2 == 0:
+            stack.stacking(actual_node.value)
+        actual_node = actual_node.next
 
-    nodo_actual = lista.cabecera
+    actual_node = lsl.head
 
-    while nodo_actual is not None:
-        if nodo_actual.valor % 2 != 0:
-            pila.apilar(nodo_actual.valor)
-        nodo_actual = nodo_actual.siguiente
+    while actual_node is not None:
+        if actual_node.value % 2 != 0:
+            stack.stacking(actual_node.value)
+        actual_node = actual_node.next
 
-    print("Pila (numeros pares abajo, impares arriba):")
-    pila.imprimir_pila()
+    print("Pila (números pares abajo, impares arriba):")
+    stack.print_stack()
 
 except:
-    print("Pila (numeros pares abajo, impares arriba):")
-    pila.imprimir_pila()
+    print("Pila (números pares abajo, impares arriba):")
+    stack.print_stack()
