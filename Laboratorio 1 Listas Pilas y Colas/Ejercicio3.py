@@ -1,8 +1,13 @@
 """
+Laboratorio 1 Listas, Pilas y Colas
+
 Ejercicio 3
 Utiliza una lista circular para generar 50 números enteros aleatorios en el rango de 1 a 100.
 Implementa un método que ordene los nodos de la lista
 y otro método que muestre los elementos de la lista resultante ordenada.
+
+1015066047 - Sarai Restrepo Rodriguez
+1045076775 - Santiago Palacio Cardenas
 """
 
 import random

@@ -1,8 +1,13 @@
 """
+Laboratorio 1 Listas, Pilas y Colas
+
 Ejercicio 1
 Utiliza una lista simplemente enlazada para crear una estructura de 25 nodos,
 cada uno conteniendo un número aleatorio entre 1 y 30. Una vez generada la lista enlazada,
-construye una pila en la que los números pares se coloquen en la parte inferior y los impares en la parte superior. 
+construye una pila en la que los números pares se coloquen en la parte inferior y los impares en la parte superior.
+
+1015066047 - Sarai Restrepo Rodriguez
+1045076775 - Santiago Palacio Cardenas
 """
 
 import random

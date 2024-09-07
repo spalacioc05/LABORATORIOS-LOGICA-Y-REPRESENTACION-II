@@ -1,9 +1,14 @@
 """
+Laboratorio 1 Listas, Pilas y Colas
+
 Ejercicio 2
 
 Simula una cola de impresión para una impresora compartida utilizando una lista doblemente enlazada.
 Cada documento en la cola debe contener una frase de hasta 20 caracteres.
 Los documentos deben ser procesados en el orden en que fueron encolados, respetando su secuencia de llegada. 
+
+1015066047 - Sarai Restrepo Rodriguez
+1045076775 - Santiago Palacio Cardenas
 """
 
 
