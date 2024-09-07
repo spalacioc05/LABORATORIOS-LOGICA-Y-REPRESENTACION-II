@@ -19,7 +19,7 @@ class LDL:
         self.cabecera = None
         self.cola = None
 
-    def agregar_al_final(self, documento):
+    def agregar_al_final(self, documento):  # Método para insertar nodos en la LDL
         nuevo_nodo = Nodo(documento)
 
         if self.cola is None:
@@ -30,7 +30,7 @@ class LDL:
             self.cola.siguiente = nuevo_nodo
             self.cola = nuevo_nodo
 
-    def imprimir_lista(self):
+    def imprimir_lista(self):  # Método para imprimir los nodos de la LDL
         if self.cabecera is None:
             print("La lista esta vacia\n")
         else:
@@ -46,11 +46,12 @@ class Cola:
     def __init__(self):
         self.V = []
 
-    def cola_vacia(self):
+    def cola_vacia(self):  # Verificamos que la cola este llena o vacía
         return len(self.V) == 0
 
     def encolar(self, documento):
-        documento = str(documento)
+        documento = str(documento)  # Evitamos errores por formato, validando que lo que llegue sean strings
+        # Validamos que el documento sea menor a 20 carácteres
         if len(documento) > 20:
             print(f"No pudimos encolar la frase {documento} porque es muy larga, usa un maximo de 20 caracteres.\n")
         else:

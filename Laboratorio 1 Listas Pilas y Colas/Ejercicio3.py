@@ -18,34 +18,35 @@ class LSLC:
     def __init__(self):
         self.cabecera = None
 
-    def insertar_nuevo_nodo(self, valor):
+    def insertar_nuevo_nodo(self, valor):  # Método para insertar nodos en la LSLC
         nuevo_nodo = Nodo(valor)
-        if self.cabecera is None:
+        if self.cabecera is None:  # Verificamos si solo hay un nodo, si es asi, este se apunta a si mismo
             self.cabecera = nuevo_nodo
             self.cabecera.siguiete = self.cabecera
         else:
             nodo_actual = self.cabecera
-            while nodo_actual.siguiete is not self.cabecera:
+            while nodo_actual.siguiete is not self.cabecera:  # Buscamos el último nodo y actualizamos los punteros
                 nodo_actual = nodo_actual.siguiete
             nodo_actual.siguiete = nuevo_nodo
             nuevo_nodo.siguiete = self.cabecera
 
-    def lista(self):
+    def lista(self):  # Método para extraer los valores de los nodos de una LSLC a un ArrayList
         L = []
         if self.cabecera:
             nodo_actual = self.cabecera
             while True:
-                L.append(nodo_actual.valor)
+                L.append(nodo_actual.valor)  # Agregamos el valor del nodo al ArrayList
                 nodo_actual = nodo_actual.siguiete
                 if nodo_actual == self.cabecera:
                     break
-        return L
+        return L  # Retornamos el ArrayList con cada uno de los valores de la LSLC
 
     def ordenamiento_por_insercion(self):
+        # Método para ordenar los valores del ArrayList y devuelve la LSLC ordenada
         if self.cabecera:
-            lista = self.lista()
+            lista = self.lista()  # Declaramos una variable igual a nuestro ArrayList con los valores de los nodos
 
-            for i in range(1, len(lista)):
+            for i in range(1, len(lista)):  # Método de ordenamiento por inserción
                 p = lista[i]
                 j = i - 1
                 while j >= 0 and p < lista[j]:
@@ -54,10 +55,10 @@ class LSLC:
                 lista[j + 1] = p
 
             self.cabecera = None
-            for i in lista:
+            for i in lista:  # Insertamos los valores ordenados en la LSLC
                 self.insertar_nuevo_nodo(i)
 
-    def imprimir_lista(self):
+    def imprimir_lista(self):  # Método para imprimir los nodos de la LSLC
         if self.cabecera is None:
             print("La lista esta vacia")
         else:
@@ -71,7 +72,7 @@ class LSLC:
 
 
 lslc = LSLC()
-for i in range(50):
+for i in range(50):  # Generacion de 50 números aleatorios
     lslc.insertar_nuevo_nodo(random.randint(1, 100))
 
 print("Lista original:\n")
