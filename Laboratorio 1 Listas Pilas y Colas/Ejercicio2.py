@@ -6,11 +6,13 @@ Cada documento en la cola debe contener una frase de hasta 20 caracteres.
 Los documentos deben ser procesados en el orden en que fueron encolados, respetando su secuencia de llegada. 
 """
 
+
 class Nodo:
     def __init__(self, documento):
         self.anterior = None
         self.siguiente = None
         self.documento = documento
+
 
 class LDL:
     def __init__(self):
@@ -19,7 +21,7 @@ class LDL:
 
     def agregar_al_final(self, documento):
         nuevo_nodo = Nodo(documento)
-        
+
         if self.cola is None:
             self.cabecera = nuevo_nodo
             self.cola = nuevo_nodo
@@ -28,67 +30,55 @@ class LDL:
             self.cola.siguiente = nuevo_nodo
             self.cola = nuevo_nodo
 
-    def eliminar_cabecera(self):
-        if self.cabecera is None:
-            print("La lista esta vacia")
-        else:
-            nodo = self.cabecera
-            self.cabecera = self.cabecera.siguiente
-            if self.cabecera:
-                self.cabecera.anterior = None
-            else:
-                self.cola = None
-            return nodo
 
-    def longitud(self):
-        count = 0
-        nodo_actual = self.cabecera
-        while nodo_actual is not None:
-            count += 1
-            nodo_actual = nodo_actual.siguiente
-        return count
+class ImprimirCola:
+    def __init__(self):
+        self.cabecera = None
+        self.cola = None
 
-class ColaNoCircular:
-    def __init__(self, m):
-        self.capacidad = m
-        self.V = LDL()
-        
     def cola_vacia(self):
-        return self.V.longitud() == 0
+        return self.cabecera is None
 
-    def cola_llena(self):
-        return self.V.longitud() == self.capacidad
+    def encolar(self, doc):
+        doc = str(doc)
+        if len(doc) > 20:
+            print(f"No pudimos encolar la frase {doc} porque es muy larga, usa un maximo de 20 caracteres.")
+            return
 
-    def encolar(self, documento):
-        documento = str(documento)
-        if self.cola_llena():
-            print(" Cola llena ")
-        elif len(documento) > 20:
-            print(f"Error: El documento: {documento} excede los 20 caracteres.")
-        else:
-            self.V.agregar_al_final(documento)
+        nuevo_nodo = Nodo(doc)
 
-    def desencolar(self):
         if self.cola_vacia():
-            print(" Cola vacía ")
-            return None
+            self.cabecera = self.cola = nuevo_nodo
         else:
-            nodo_actual = self.V.eliminar_cabecera()
-            return nodo_actual.documento
+            nuevo_nodo.anterior = self.cola
+            self.cola.siguiente = nuevo_nodo
+            self.cola = nuevo_nodo
 
-    def imprimir_cola(self):
-        while not self.cola_vacia():
-            documento = self.desencolar()
-            if documento is not None:
-                print(f"Imprimiendo documento... {documento}")
+    def proceso(self):
+        if self.cola_vacia():
+            print("No hay elementos en la cola")
+            return
 
-# Ejemplo de uso
-cola = ColaNoCircular(5)
+        valor_actual = self.cabecera
 
-cola.encolar("Documento 3")
-cola.encolar("Documentoooooooooooooooooooooooooooooooooooooooo")
-cola.encolar(567890)
-cola.encolar("Documento 4")
-cola.encolar("Documento 5")
+        while valor_actual:
+            print(f"Printing document... {valor_actual.documento}")
+            valor_actual = valor_actual.siguiente
 
-cola.imprimir_cola()
+
+lista = LDL()
+lista.agregar_al_final("Documentoooooooooooooooooooooooooooooooooooooooo")
+lista.agregar_al_final(855)
+lista.agregar_al_final("Documento 3")
+lista.agregar_al_final("Documento 4")
+lista.agregar_al_final("Documento 5")
+
+nodo_actual = lista.cabecera
+
+cola = ImprimirCola()
+
+while nodo_actual is not None:
+    cola.encolar(nodo_actual.documento)
+    nodo_actual = nodo_actual.siguiente
+
+cola.proceso()
