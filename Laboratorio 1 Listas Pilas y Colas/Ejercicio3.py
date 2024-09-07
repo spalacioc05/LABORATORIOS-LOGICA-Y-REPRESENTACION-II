@@ -1,16 +1,18 @@
 """
 Ejercicio 3
 Utiliza una lista circular para generar 50 números enteros aleatorios en el rango de 1 a 100.
-Implementa un método que ordene los nodos de la lista 
+Implementa un método que ordene los nodos de la lista
 y otro método que muestre los elementos de la lista resultante ordenada.
 """
 
 import random
 
+
 class Nodo:
     def __init__(self, parametro):
         self.valor = parametro
         self.siguiete = None
+
 
 class LSLC:
     def __init__(self):
@@ -42,7 +44,7 @@ class LSLC:
     def ordenamiento_por_insercion(self):
         if self.cabecera:
             lista = self.lista()
-            
+
             for i in range(1, len(lista)):
                 p = lista[i]
                 j = i - 1
@@ -50,7 +52,7 @@ class LSLC:
                     lista[j + 1] = lista[j]
                     j -= 1
                 lista[j + 1] = p
-            
+
             self.cabecera = None
             for i in lista:
                 self.insertar_nuevo_nodo(i)
@@ -66,7 +68,8 @@ class LSLC:
                     break
                 else:
                     nodo_actual = nodo_actual.siguiete
-                    
+
+
 lslc = LSLC()
 for i in range(50):
     lslc.insertar_nuevo_nodo(random.randint(1, 100))
@@ -74,8 +77,8 @@ for i in range(50):
 print("Lista original:\n")
 lslc.imprimir_lista()
 
-print("\n---------------------------------------------------------------------------------------------------------------------------------------------------\n")
-
+print(
+    "\n---------------------------------------------------------------------------------------------------------------------------------------------------\n")
 
 lslc.ordenamiento_por_insercion()
 
