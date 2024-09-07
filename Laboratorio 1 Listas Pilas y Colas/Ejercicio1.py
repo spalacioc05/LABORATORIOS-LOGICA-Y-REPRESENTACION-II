@@ -47,7 +47,7 @@ class Pila:
 
     def apilar(self, valor):
         if self.pila_llena():
-            print("La pila esta llena, solo podemos apilar 25 objetos a la vez.")
+            print("La pila esta llena, solo podemos apilar 25 objetos a la vez.\n")
             raise ValueError("Error")
         else:
             self.cima = self.cima + 1
@@ -63,9 +63,9 @@ lsl = LSL()
 for i in range(25):
     lsl.insertar_valor(random.randint(1, 30))
 
-print("LSL")
+print("LSL\n")
 lsl.imprimir_lista()
-print("--------------------------------------------------------------------------------------")
+print("\n---------------------------------------------------------------------------------------------------------------------------------------------------\n")
 
 pila = Pila(25)
 nodo_actual = lsl.cabecera
@@ -83,9 +83,9 @@ try:
             pila.apilar(nodo_actual.valor)
         nodo_actual = nodo_actual.siguiente
 
-    print("Pila (numeros pares abajo, impares arriba):")
+    print("Pila (numeros pares abajo, impares arriba):\n")
     pila.imprimir_pila()
 
 except:
-    print("Pila (numeros pares abajo, impares arriba):")
+    print("Pila (numeros pares abajo, impares arriba):\n")
     pila.imprimir_pila()
