@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 #Clase Nodo sacada de las diapositivas de clase
 class Nodo:
     def __init__(self, valor):
@@ -81,16 +83,51 @@ class ArbolBinario:
 
 
 
+    # Método para crear una representación gráfica del árbol
+    def graficar_arbol(self):
+        if not self.raiz:
+            print("El árbol está vacío.")
+            return
 
-#Método con menú y acciones a ejecutar
+        def recorrer_nodos(nodo, x, y, dx, posiciones, conexiones):
+            if nodo:
+                posiciones[nodo.valor] = (x, y)
+                if nodo.izquierda:
+                    conexiones.append((nodo.valor, nodo.izquierda.valor))
+                    recorrer_nodos(nodo.izquierda, x - dx, y - 1, dx / 2, posiciones, conexiones)
+                if nodo.derecha:
+                    conexiones.append((nodo.valor, nodo.derecha.valor))
+                    recorrer_nodos(nodo.derecha, x + dx, y - 1, dx / 2, posiciones, conexiones)
+
+        posiciones = {}
+        conexiones = []
+        recorrer_nodos(self.raiz, 0, 0, 1, posiciones, conexiones)
+
+        # Graficar los nodos
+        for valor, (x, y) in posiciones.items():
+            plt.scatter(x, y, s=500, zorder=2)
+            plt.text(x, y, str(valor), ha='center', va='center', fontsize=12, zorder=3)
+
+        # Graficar las conexiones
+        for de, a in conexiones:
+            x1, y1 = posiciones[de]
+            x2, y2 = posiciones[a]
+            plt.plot([x1, x2], [y1, y2], 'k-', zorder=1)
+
+        plt.axis('off')
+        plt.show()
+
+#Método con el menu y acciones a ejecutar
 def gestionar_arbol():
     arbol = ArbolBinario() # instanciamos nuestro arbol vacío con todos lo métodos necesario
 
     while True:
+
         print("Opciones:")
         print("1. Insertar números en el árbol")
         print("2. Balancear el árbol")
-        print("3. Salir")
+        print("3. Graficar árbol")
+        print("4. Salir")
 
         opcion = input("Seleccione una opción: ")
 
@@ -107,11 +144,15 @@ def gestionar_arbol():
             print()
 
         elif opcion == "3":
+            print("\nRepresentación gráfica del árbol:")
+            arbol.graficar_arbol()
+
+        elif opcion == "4":
             print("Programa finalizado.")
             break
 
         else:
             print("Opción no válida. Intente de nuevo.")
 
-gestionar_arbol()
 
+gestionar_arbol()

@@ -39,5 +39,36 @@ def encontrar_amigos_comunes(grafo, amigo_a, amigo_b):
 amigos_comunes = encontrar_amigos_comunes(grafo, amigo_a, amigo_b)
 print(f"Amigos en común entre {amigo_a} y {amigo_b}: {amigos_comunes}")
 
-nx.draw(grafo, with_labels=True, node_size=700, node_color="lightblue", font_size=10)
-plt.show()
+def dibujar_grafo_con_destacados(grafo, amigo_a, amigo_b, amigos_comunes):
+    pos = nx.spring_layout(grafo)
+
+    # Colores para los nodos
+    colores_nodos = []
+    for nodo in grafo.nodes:
+        if nodo == amigo_a or nodo == amigo_b:
+            colores_nodos.append("green")
+        elif nodo in amigos_comunes:
+            colores_nodos.append("orange")
+        else:
+            colores_nodos.append("lightblue")
+
+    # Colores para las aristas
+    colores_aristas = []
+    for u, v in grafo.edges:
+        if (u in amigos_comunes and v in amigos_comunes) or \
+           (u in amigos_comunes and (v == amigo_a or v == amigo_b)) or \
+           (v in amigos_comunes and (u == amigo_a or u == amigo_b)):
+            colores_aristas.append("red")  # Conexion de amigos
+        else:
+            colores_aristas.append("gray")  # Otros..
+
+
+    nx.draw_networkx_nodes(grafo, pos, node_color=colores_nodos, node_size=700) #Nodos
+    nx.draw_networkx_edges(grafo, pos, edge_color=colores_aristas) #Aristas
+    nx.draw_networkx_labels(grafo, pos, font_size=10) #Etiquetas
+
+    plt.title(f"Amigos en común entre {amigo_a} y {amigo_b}")
+    plt.axis("off")
+    plt.show()
+
+dibujar_grafo_con_destacados(grafo, amigo_a, amigo_b, amigos_comunes)
