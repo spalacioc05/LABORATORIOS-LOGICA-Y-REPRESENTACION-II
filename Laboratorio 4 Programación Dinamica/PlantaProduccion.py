@@ -1,70 +1,82 @@
 from collections import defaultdict
-
+from tabulate import tabulate
 
 class Trabajador:
     def __init__(self, nombre, habilidades, disponibilidad):
         self.nombre = nombre
         self.habilidades = set(habilidades)
         self.disponibilidad = disponibilidad
-        self.horas_asignadas = 0
-
+        self.horasAsignadas = 0
 
 class Turno:
-    def __init__(self, habilidades_requeridas, duracion, prioridad):
-        self.habilidades_requeridas = habilidades_requeridas
+    def __init__(self, habilidadesRequeridas, duracion, prioridad):
+        self.habilidadesRequeridas = habilidadesRequeridas
         self.duracion = duracion
         self.prioridad = prioridad
 
-
-def asignar_turnos(trabajadores, turnos):
+def asignarTurnos(trabajadores, turnos):
     # Ordenar turnos por prioridad (mayor prioridad primero)
     turnos.sort(key=lambda x: x.prioridad, reverse=True)
-
-    # Tabla DP para almacenar la mejor asignación
+    
+    # Se almacena la mejor asignación
     dp = defaultdict(lambda: float('-inf'))
     dp[0] = 0  # Caso base: ningún turno asignado, ninguna hora trabajada
-
-    # Seguimiento de la mejor asignación
-    mejor_asignacion = {}
-
+    
+    # Seguimiento
+    mejorAsignacion = {}
+    
     for turno in turnos:
-        nuevo_dp = dp.copy()
+        nuevoDP = dp.copy()
+        
         for estado, valor in dp.items():
             for trabajador in trabajadores:
-                if trabajador.habilidades >= set(
-                        turno.habilidades_requeridas) and trabajador.disponibilidad - trabajador.horas_asignadas >= turno.duracion:
-                    nuevo_estado = estado | (1 << turnos.index(turno))
-                    nuevo_valor = valor + turno.prioridad
-                    if nuevo_valor > nuevo_dp[nuevo_estado]:
-                        nuevo_dp[nuevo_estado] = nuevo_valor
-                        mejor_asignacion[nuevo_estado] = (trabajador, turno)
-                        trabajador.horas_asignadas += turno.duracion
-        dp = nuevo_dp
-
-    # Extraer la mejor asignación
-    max_estado = max(dp, key=dp.get)
+                if trabajador.habilidades >= set(turno.habilidadesRequeridas) and trabajador.disponibilidad - trabajador.horasAsignadas >= turno.duracion:
+                    nuevoEstado = estado | (1 << turnos.index(turno))
+                    nuevoValor = valor + turno.prioridad
+                    
+                    if nuevoValor > nuevoDP[nuevoEstado]:
+                        nuevoDP[nuevoEstado] = nuevoValor
+                        mejorAsignacion[nuevoEstado] = (trabajador, turno)
+                        trabajador.horasAsignadas += turno.duracion
+        dp = nuevoDP
+    
+    # Mejor asignación
+    maxEstado = max(dp, key=dp.get)
     asignacion = []
-    while max_estado:
-        trabajador, turno = mejor_asignacion[max_estado]
-        asignacion.append((trabajador.nombre, turno.habilidades_requeridas, turno.duracion))
-        max_estado &= ~(1 << turnos.index(turno))
-
+    
+    while maxEstado:
+        trabajador, turno = mejorAsignacion[maxEstado]
+        asignacion.append((trabajador.nombre, turno.habilidadesRequeridas, turno.duracion))
+        maxEstado &= ~(1 << turnos.index(turno))
+    
     return asignacion
 
 
-# Ejemplo de uso
 trabajadores = [
-    Trabajador("Alicia", ["soldadura", "ensamblaje"], 40),
-    Trabajador("Roberto", ["control_calidad", "ensamblaje"], 40),
-    Trabajador("Carlos", ["soldadura", "control_calidad"], 40)
+    Trabajador("Santiago", ["soldadura", "ensamblaje"], 40),
+    Trabajador("Sarai", ["control de calidad", "ensamblaje"], 40),
+    Trabajador("Sarah", ["soldadura", "control de calidad"], 40),
+    Trabajador("Angelo", ["soldadura", "ensamblaje", "control de calidad"], 40),
+    Trabajador("Victor", ["ensamblaje"], 40),
+    Trabajador("Susana", ["control de calidad"], 40)
 ]
 
 turnos = [
     Turno(["soldadura", "ensamblaje"], 8, 3),
-    Turno(["control_calidad"], 4, 2),
-    Turno(["ensamblaje"], 6, 1)
+    Turno(["control de calidad"], 4, 2),
+    Turno(["ensamblaje"], 6, 1),
+    Turno(["soldadura"], 5, 4),
+    Turno(["ensamblaje", "control de calidad"], 7, 5),
+    Turno(["soldadura", "control de calidad"], 6, 3),
+    Turno(["ensamblaje"], 4, 2),
+    Turno(["control de calidad"], 3, 1)
 ]
 
-asignacion = asignar_turnos(trabajadores, turnos)
+asignacion = asignarTurnos(trabajadores, turnos)
+
+tabla = [["Trabajador", "Habilidades Requeridas", "Duración (horas)"]]
+
 for a in asignacion:
-    print(f"Trabajador {a[0]} asignado al turno que requiere {a[1]} por {a[2]} horas")
+    tabla.append([a[0], ", ".join(a[1]), a[2]])
+
+print(tabulate(tabla, headers="firstrow", tablefmt="grid"))
